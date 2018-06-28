@@ -2,6 +2,8 @@
 
 This plugin allows to update a Kubernetes deployment.
 
+This fork adds a `slack_incoming_webhook` env var that will notify your slcack channel that a container has been deployed.
+
 ## Usage  
 
 This pipeline will update the `my-deployment` deployment with the image tagged `DRONE_COMMIT_SHA:0:8`
