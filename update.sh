@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if [ ! -z ${PLUGIN_SLACK_INCOMING_WEBHOOK} ]; then
+  SLACK_INCOMING_WEBHOOK=$PLUGIN_SLACK_INCOMING_WEBHOOK
+fi
+echo SLACK_INCOMING_WEBHOOK is $SLACK_INCOMING_WEBHOOK
+
+
 if [ -z ${PLUGIN_NAMESPACE} ]; then
   PLUGIN_NAMESPACE="default"
 fi
@@ -44,5 +50,12 @@ for DEPLOY in ${DEPLOYMENTS[@]}; do
     fi
     kubectl -n ${PLUGIN_NAMESPACE} set image deployment/${DEPLOY} \
       ${CONTAINER}=${PLUGIN_REPO}:${PLUGIN_TAG} --record
+
+    if [ ! -z $SLACK_INCOMING_WEBHOOK ]; then 
+      echo curl -X POST -H 'Content-type: application/json' --data '{"text":"['${PLUGIN_NAMESPACE}'] updated: '${DEPLOY}':'${PLUGIN_TAG}' "}' ${SLACK_INCOMING_WEBHOOK}
+      curl -X POST -H 'Content-type: application/json' --data '{"text":"['${PLUGIN_NAMESPACE}'] updated: '${DEPLOY}':'${PLUGIN_TAG}' "}' ${SLACK_INCOMING_WEBHOOK}
+    else
+      echo SLACK_INCOMING_WEBHOOK is not set, won\'t notify slack
+    fi
   done
 done
