@@ -2,7 +2,7 @@
 
 This plugin allows to update a Kubernetes deployment.
 
-This fork adds a `slack_incoming_webhook` env var that will notify your slcack channel that a container has been deployed.
+This fork adds a `slack_incoming_webhook` env var that will notify your slack channel that a container has been deployed.
 
 ## Usage  
 
