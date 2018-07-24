@@ -10,6 +10,8 @@ if [ -z ${PLUGIN_NAMESPACE} ]; then
   PLUGIN_NAMESPACE="default"
 fi
 
+PLUGIN_NAMESPACE=$(echo $PLUGIN_NAMESPACE | tr '[:upper:]' '[:lower:]')
+
 if [ -z ${PLUGIN_KUBERNETES_USER} ]; then
   PLUGIN_KUBERNETES_USER="default"
 fi
